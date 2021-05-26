@@ -1,0 +1,66 @@
+{% extends 'base.html'%} {%block head%}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{%endblock%} {% block content%}
+
+<div class="row align-items-center">
+  <div class="col gap-3">
+    {%if form%}
+    <form action="/" method="post">
+      {%for field in form%}
+      <p>
+        {{field.label(class_="form-label")}}: 
+        {%if field.type == 'BooleanField'%}
+        {{field(class_="form-check-input")}} 
+        {%elif field.type =='SelectField'%} 
+        {{field(class_="form-select")}} 
+        {%else%}
+        {{field(class_="form-control")}} 
+        {%endif%}
+      </p>
+      {%endfor %}
+      <div class="d-grid gap-3">
+      <button type="submit" class="btn btn-primary">Get Prediction</button>
+    </div>
+    </form>
+    {%endif %}
+  </div>
+  <div class="col d-flex justify-content-center px-5 gap-3 mt-4">
+    {%if data%}
+
+      <div class="chart">
+          <canvas id="myChart"></canvas>
+      </div>
+
+
+    <script>
+      console.log("Test");
+      const data = {
+        labels: ["Yes", "No"],
+        datasets: [
+          {
+            label: "My First Dataset",
+            data: ["{{data.yes}}", "{{data.no}}"],
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
+            hoverOffset: 4,
+          },
+        ],
+      };
+      const config = {
+        type: "doughnut",
+        data,
+        options: {},
+      };
+      var myChart = new Chart(document.getElementById("myChart"), config);
+      console.log("{{data.no}}");
+    </script>
+    {%else%} Awaiting form submission for result {%endif%}
+  </div>
+</div>
+
+<style>
+  .chart {
+    width: 400px;
+    height: 400px;
+  }
+</style>
+{%endblock %}
