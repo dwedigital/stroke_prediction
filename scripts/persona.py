@@ -4,7 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 APIKEY = os.getenv('APIKEY')
-print(APIKEY)
+REPORT_ID = os.getenv('REPORT_ID')
+
 class Persona():
 
     def __init__(self, persona: dict)->None:
@@ -37,7 +38,7 @@ class Persona():
             "bmi":self.bmi,
             "smoking_status":self.smoking_status
     },
-    "id": "48173120-bbbb-11eb-8f36-fb2a818ec475"
+    "id": REPORT_ID
 }
 
         headers ={"Authorization":f"ApiKey {APIKEY}"
